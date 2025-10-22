@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <title>مؤسسة الأحمدي</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #0D3B66;
+      --secondary-color: #FFD700;
+      --text-color: #333;
+      --bg-color: #f5f5f5;
+      --white: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --bg-color: #121212;
+      --white: #1e1e1e;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+      direction: rtl;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: var(--primary-color);
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.3s;
+    }
+
+    header .logo img {
+      height: 60px;
+      width: auto;
+      border-radius: 8px;
+    }
+
+    header nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: var(--secondary-color);
+      font-weight: 600;
+      font-size: 18px;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    header nav a:hover {
+      color: #e6c200;
+    }
+
+    header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--secondary-color);
+      transition: width 0.3s;
+    }
+
+    header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--secondary-color);
+      color: var(--secondary-color);
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+    }
+
+    #theme-icon {
+      color: var(--secondary-color);
+    }
+
+    .call-btn {
+      padding: 10px 20px;
+      background-color: var(--secondary-color);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--primary-color);
+      transition: all 0.3s;
+    }
+
+    .call-btn:hover {
+      background-color: #e6c200;
+      transform: scale(1.05);
+    }
+
+    .call-btn i {
+      margin-left: 8px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #FFD700;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .hero {
+      height: 100vh;
+      background-image: url('img/mensAlahmady.png');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      margin-top: 80px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+      backdrop-filter: blur(3px);
+    }
+
+    .hero h1, .hero h3, .hero .hero-btn {
+      position: relative;
+      z-index: 2;
+      color: var(--secondary-color);
+      text-shadow: 0 0 10px var(--secondary-color);
+      margin: 15px 0;
+      animation: glowPulse 3s infinite alternate;
+    }
+
+    .hero-headline {
+      font-size: clamp(24px, 5vw, 38px);
+      background-image: linear-gradient(120deg, #FFD700, #00BFFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subheadline {
+      font-size: clamp(36px, 8vw, 64px);
+      font-weight: bold;
+    }
+
+    .hero-btn {
+      background-color: var(--white);
+      color: var(--secondary-color);
+      border: none;
+      padding: 15px 35px;
+      border-radius: 5px;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+
+    .hero-btn:hover {
+      background-color: var(--secondary-color);
+      color: var(--white);
+      transform: scale(1.1);
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 5px var(--secondary-color); }
+      50% { text-shadow: 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color); }
+    }
+
+    .section-title {
+      font-size: clamp(28px, 5vw, 42px);
+      color: #FFD700;
+      margin-bottom: 50px;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 25px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+
+    .section-title-line3 {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+
+    .about-us {
+      padding: 100px 20px;
+      background-color: var(--bg-color);
+    }
+
+    .about-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .about-image {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .about-image img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .about-image img:hover {
+      transform: scale(1.05);
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 280px;
+      text-align: right;
+    }
+
+    .about-text h2 {
+      position: relative;
+      display: inline-block;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--text-color);
+      margin-bottom: 30px;
+    }
+
+    .services {
+      padding: 100px 20px;
+      background-color: var(--white);
+    }
+
+    .services-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .services-images {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      order: 2;
+    }
+
+    .top-image img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+
+    .top-image img:hover {
+      transform: translateY(-10px);
+    }
+
+    .bottom-images {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .bottom-images img {
+      width: 100%;
+      max-width: 140px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+
+    .bottom-images img:hover {
+      transform: scale(1.1);
+    }
+
+    .services-text {
+      flex: 1;
+      text-align: right;
+      order: 1;
+      min-width: 280px;
+    }
+
+    .services-text ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .services-text li {
+      font-size: 19px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: var(--text-color);
+      transition: transform 0.3s;
+    }
+
+    .services-text li:hover {
+      transform: translateX(-10px);
+    }
+
+    .services-text li i {
+      color: var(--secondary-color);
+      font-size: 24px;
+      min-width: 30px;
+    }
+
+    .contact-us {
+      padding: 100px 20px;
+      background-color: var(--primary-color);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact-us h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin-bottom: 20px;
+      color: var(--secondary-color);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+    }
+
+    .contact-us p {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .contact-us .phone-number {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: var(--secondary-color);
+      direction: ltr;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      header nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--primary-color);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 30px;
+        gap: 20px;
+        transition: left 0.3s;
+      }
+
+      header nav.active {
+        left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .header-controls {
+        gap: 10px;
+      }
+
+      .call-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+
+      .hero {
+        margin-top: 80px;
+        height: 90vh;
+      }
+
+      .services-container {
+        flex-direction: column;
+      }
+
+      .services-images {
+        order: 1;
+      }
+
+      .services-text {
+        order: 2;
+      }
+
+      .about-container {
+        flex-direction: column;
+      }
+
+      .services-images {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .top-image {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .top-image img {
+        width: 100%;
+      }
+
+      .bottom-images {
+        display: flex;
+        gap: 15px;
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+
+      .bottom-images img {
+        max-width: 140px;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header .logo img {
+        height: 45px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .services-text li {
+        font-size: 16px;
+      }
+
+      .top-image {
+        max-width: 250px;
+      }
+
+      .bottom-images {
+        max-width: 250px;
+        gap: 10px;
+      }
+
+      .bottom-images img {
+        max-width: 115px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="img/logo.png" alt="شعار مؤسسة الأحمدي">
+    </div>
+    
+    <nav id="nav-menu">
+      <a href="#hero">الرئيسية</a>
+      <a href="#about">من نحن</a>
+      <a href="#services">الخدمات</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+
+    <div class="header-controls">
+      <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع">
+        <i class="fas fa-moon" id="theme-icon"></i>
+      </button>
+      <button class="call-btn" onclick="call()">
+        <i class="fas fa-phone-alt"></i>
+        <span class="btn-text">اتصل</span>
+      </button>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+        <h1 class="hero-subheadline" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200"> مؤسسة الأحمدي لنقل العفش</h1>
+
+        <button class="hero-btn" onclick="call()" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+      <i class="fas fa-phone-alt"></i> اتصل الآن
+    </button>
+    <h3 class="hero-headline" data-aos="fade-down" data-aos-duration="1000">الطريقة السهلة والموثوقة للاعتناء بمنزلك</h3>
+
+  </section>
+
+    <section class="services" id="services">
+    <div style="text-align: center; width: 100%; margin-bottom: 30px;">
+      <h2 class="section-title" data-aos="fade-up" data-aos-duration="1000">
+        خدماتنا
+        <span class="section-title-line3"></span>
+      </h2>
+    </div>
+    
+    <div class="services-container">
+      <div class="services-text" data-aos="fade-left" data-aos-duration="1000">
+        <ul>
+          <li data-aos="fade-left" data-aos-delay="100"><i class="fas fa-truck"></i> نقل العفش المنزلي والمكتبي داخل وخارج المدن</li>
+          <li data-aos="fade-left" data-aos-delay="200"><i class="fas fa-box-open"></i> تغليف احترافي لجميع أنواع الأثاث</li>
+          <li data-aos="fade-left" data-aos-delay="300"><i class="fas fa-tools"></i> فك وتركيب الأثاث على أيدي فنيين مؤهلين</li>
+          <li data-aos="fade-left" data-aos-delay="400"><i class="fas fa-plug"></i> نقل الأجهزة الكهربائية والمكيفات بأمان تام</li>
+          <li data-aos="fade-left" data-aos-delay="500"><i class="fas fa-car"></i> توفير سيارات نقل حديثة ومجهزة بالكامل</li>
+        </ul>
+      </div>
+
+      <div class="services-images">
+        <div class="top-image" data-aos="zoom-in" data-aos-duration="1000">
+          <img src="img/carry chair.png" alt="خدمة نقل الأثاث">
+        </div>
+        <div class="bottom-images">
+          <img src="img/mensAlahmady.png" alt="فريق العمل" data-aos="flip-left" data-aos-delay="200">
+          <img src="img/car.png" alt="سيارات النقل" data-aos="flip-right" data-aos-delay="400">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="about-us" id="about">
+    <div class="about-container">
+      <div class="about-image" data-aos="fade-left" data-aos-duration="1000">
+        <img src="img/logo.png" alt="مؤسسة الأحمدي">
+      </div>
+      
+      <div class="about-text" data-aos="fade-right" data-aos-duration="1000">
+        <h2 class="section-title">
+          من نحن - مؤسسة الأحمدي
+          <span class="section-title-line3"></span>
+        </h2>
+        <p>
+          مؤسسة الأحمدي من المؤسسات الرائدة في مجال نقل العفش داخل المملكة، 
+          نقدم خدماتنا بجودة عالية وأمان تام وبأفضل الأسعار. 
+          لدينا فريق محترف ومدرب على أعلى مستوى للتأكد من سلامة الأثاث والممتلكات الخاصة بكم. 
+          نسعى دائماً لتقديم خدمة سريعة وموثوقة، مع الالتزام بالمواعيد والجودة. 
+          هدفنا هو رضا العميل وتحقيق تجربة نقل سهلة ومريحة لجميع عملائنا.
+        </p>
+        <button class="call-btn" onclick="call()">
+          <i class="fas fa-phone-alt"></i> اتصل الآن
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="contact-us" id="contact">
+    <div class="contact-container">
+      <h2 data-aos="fade-down" data-aos-duration="1000">تواصل معنا</h2>
+      <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100" style="color: var(--secondary-color);">خليك متطمن، أثاثك يوصل سالم وين ما كنت!</p>
+      <p class="phone-number" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">0561507533</p>
+      <button class="call-btn" onclick="call()" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+        <i class="fas fa-phone-alt"></i> اتصل الآن
+      </button>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        icon.className = 'fas fa-moon';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        icon.className = 'fas fa-sun';
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('theme-icon').className = 'fas fa-sun';
+    }
+
+    function toggleMenu() {
+      const nav = document.getElementById('nav-menu');
+      nav.classList.toggle('active');
+    }
+
+    document.querySelectorAll('header nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('active');
+      });
+    });
+
+    function call() {
+      window.location.href = 'tel:0561507533';
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
